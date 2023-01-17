@@ -273,4 +273,66 @@ describe('Central de Atendimento ao Cliente TAT', function () {
 
   })
 
+  context('Avançando no uso do Cypress', () => {
+
+    it('Verificar se a mensagem fica invisivel com o tempo definido', function () {
+
+      const longText = "Parabéns! Vimos que vem trabalhando há tempos para construir essa conquista. Na minha opinião o que te levou até ela foram tal e tal coisa, e na sua? O que fez que te levou a acertar nessa ação? Acha que pode compartilhar esse conhecimento com a equipe?"
+
+
+      cy.log('Utilizando Clock e Tick')
+      cy.clock() //trava o relogio do navegador
+
+      cy.get('input[ id="firstName"]')
+        .type('Rafael')
+      cy.get('input[ id="lastName"]')
+        .type('Moreira')
+      cy.get('input[ id="email"]')
+        .type('rafa123@gmail.com')
+      cy.get('#open-text-area')
+        .type(longText, { delay: 0 })
+      cy.contains('button', 'Enviar').click() //primeiro argumento CSS segundo o Texto contido
+
+      cy.get('.success > strong')
+        .should('be.visible')
+
+      cy.tick(3000) // avança o tempo 
+
+      cy.get('.success > strong')
+        .should('not.be.visible')
+
+
+
+    })
+
+    it('exibe e esconde as mensagens de sucesso e erro usando o .invoke()', function () {
+      cy.get('.success')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Mensagem enviada com sucesso.')
+      .invoke('hide')
+      .should('not.be.visible')
+    cy.get('.error')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Valide os campos obrigatórios!')
+      .invoke('hide')
+      .should('not.be.visible')
+
+
+    })
+
+    it('preenche a area de texto com um texto longo usando o comando invoke()', function () {
+      const longText = Cypress._.repeat('0123456789', 20)
+
+      cy.get('#open-text-area')
+      .invoke('val', longText)
+      .should('have.value', longText)
+    })
+
+
+  })
+
 })
