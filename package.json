@@ -1,0 +1,11 @@
+{
+  "name": "cypress-simple-examples",
+  "version": "1.0.0",
+  "description": "Projeto Funções Basicas Cypress",
+  "main": "index.js",
+  "author": "Rafael Moreira ",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^12.3.0"
+  }
+}
